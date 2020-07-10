@@ -1,6 +1,6 @@
 // route setup
 const router = require('koa-router')({ prefix: '/my' })
-const logger = require('../services/logger/logger')('my')
+const logger = require('../../../services/logger/logger')('my')
 // const TABLE_VISION = process.env.TABLE_VISION
 
 // routes

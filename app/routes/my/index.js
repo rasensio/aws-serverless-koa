@@ -1,5 +1,5 @@
 // app setup
-const {app, serverless} = require('../index')
+const {app, serverless} = require('../../index')
 const routes = require('./my')
 
 app.use(routes.routes())

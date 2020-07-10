@@ -10,11 +10,11 @@ const auth = require('./auth/auth')
 app.use(auth.routes())
 app.use(auth.allowedMethods())
 
-const organization = require('./organization/OrganizationApi')
+const organization = require('../organization/OrganizationApi')
 app.use(organization.routes())
 app.use(organization.allowedMethods())
 
-const user = require('./user/user')
+const user = require('../user/user')
 app.use(user.routes())
 app.use(user.allowedMethods())
 

@@ -1,10 +1,10 @@
 // route setup
 const router = require('koa-router')({ prefix: '/auth' })
-const {$validation, $isEmpty}  = require('../services/validation')
-var {$strings, $timestamps, $system} = require('../services/utils')
+const {$validation, $isEmpty}  = require('../../../services/validation/validation')
+var {$strings, $timestamps, $system} = require('../../../services/utils/utils')
 const $dynamo = require('../services/dynamo')
 var $users = require('../services/dao/users')
-var logger = require('../services/logger')('auth')
+var logger = require('../../../services/logger/logger')('auth')
 
 /**
  * will login the user, if the user exists, will just update last
