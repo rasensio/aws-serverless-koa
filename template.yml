@@ -59,7 +59,7 @@ Resources:
         DestinationArn: !GetAtt AccessLogs.Arn
         Format: '{"requestId": "$context.requestId", "userAgent": "$context.identity.userAgent", "httpMethod": "$context.httpMethod", "path": "$context.path", "status": "$context.status", "protocol": "$context.protocol", "integrationStatus": "$context.integrationStatus", "responseLatency": "$context.responseLatency" }'
       Tags:
-        Application: UpgoalApi
+        Application: MyApi
         Environment: !Ref Environment
       Auth:
         DefaultAuthorizer: OpenIdAuth

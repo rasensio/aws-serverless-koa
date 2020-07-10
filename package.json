@@ -1,7 +1,7 @@
 {
-  "name": "upgoal-webapp-api",
+  "name": "aws-serverless-koa",
   "version": "1.0.0",
-  "description": "Rasensio Web Api",
+  "description": "aws-serverless-koa",
   "main": "index.js",
   "scripts": {
     "local": "node app/local.js",

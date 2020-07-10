@@ -1,10 +1,10 @@
 #!bin/bash
-# export AWS_PROFILE=upgoal
-# export S3_BUCKET=upgoal-lambda-deployments
-# export STACK_NAME=UpgoalWebappStack
+# export AWS_PROFILE=myprofile
+# export S3_BUCKET=some-s3-bucket
+# export STACK_NAME=SomeStackName
 export AWS_PROFILE=default
-export S3_BUCKET=rasensio-lambda-deployments
-export STACK_NAME=RasensioHttpApiStack
+export S3_BUCKET=some-s3-bucket
+export STACK_NAME=SomeStackName
 
 sam package \
   --template-file template.yaml \

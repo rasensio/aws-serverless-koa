@@ -1,7 +1,7 @@
 #!bin/bash
-export AWS_PROFILE=upgoal
-export S3_BUCKET=upgoal-webapp-api-deployment-dev
-export STACK_NAME=UpgoalApiDev
+export AWS_PROFILE=default
+export S3_BUCKET=some-webapp-api-deployment-dev
+export STACK_NAME=SomeApiDev
 export ENV=dev
 export LOG_LEVEL=DEBUG
 export PWD=$(pwd)
@@ -21,6 +21,6 @@ sam deploy \
   --profile $AWS_PROFILE \
   --region us-east-1 \
   --capabilities CAPABILITY_IAM \
-  --parameter-overrides Environment=$ENV LogLevel=$LOG_LEVEL TableUsers=UpgoalUsers-$ENV TableVision=UpgoalVision-$ENV TableGoals=UpgoalGoals-$ENV
+  --parameter-overrides Environment=$ENV LogLevel=$LOG_LEVEL
 
 npm i
