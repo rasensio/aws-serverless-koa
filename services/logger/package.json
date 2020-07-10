@@ -1,0 +1,11 @@
+{
+  "name": "@rasensio/logger",
+  "version": "1.0.0",
+  "description": "Logger for js",
+  "main": "logger.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rodrigo Asensio - @rasensio",
+  "license": "ISC"
+}

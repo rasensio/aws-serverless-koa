@@ -1,0 +1,145 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS Serverless Koa Backend Webapp API
+Transform: AWS::Serverless-2016-10-31
+
+# Parameters injected by deployment or runtime for the functions
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+  LogLevel:
+    Type: String
+    Default: debug
+
+# Shared configuration for all resources
+Globals:
+  Function:
+    CodeUri: ./
+    Runtime: nodejs12.x
+    MemorySize: 128
+    Timeout: 60
+    Environment:
+      Variables:
+        ENV: !Ref Environment
+        LOG_LEVEL: !Ref LogLevel
+    Tags:
+      Application: MyApplication
+      Environment: !Ref Environment
+
+######################################
+# The API definition
+######################################
+Resources:
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      FailOnWarnings: True
+      CorsConfiguration:
+        AllowCredentials: True
+        AllowOrigins:
+          # add your origins here
+          - "https://localhost:8080"
+          - "https://yourdomain.com"
+        AllowHeaders:
+          - x-apigateway-header
+          - access-control-*
+          - origin
+          - content-type
+          - x-requested-with
+          - accept
+          - authorization
+          - referer
+        AllowMethods:
+          - GET
+          - OPTIONS
+          - POST
+          - PUT
+          - DELETE
+      AccessLogSettings:
+        DestinationArn: !GetAtt AccessLogs.Arn
+        Format: '{"requestId": "$context.requestId", "userAgent": "$context.identity.userAgent", "httpMethod": "$context.httpMethod", "path": "$context.path", "status": "$context.status", "protocol": "$context.protocol", "integrationStatus": "$context.integrationStatus", "responseLatency": "$context.responseLatency" }'
+      Tags:
+        Application: UpgoalApi
+        Environment: !Ref Environment
+      Auth:
+        DefaultAuthorizer: OpenIdAuth
+        Authorizers:
+          OpenIdAuth:
+            JwtConfiguration:
+              # replace this with your cognito endpoint
+              issuer: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_gOynqyNrq"
+              audience:
+                # replace this with your cognito pool id
+                - 4r1t01ua1o974t3is4a3mlp6t4q
+            IdentitySource: "$request.header.Authorization"       
+
+  #################################################
+  # The auth function
+  #################################################
+  AuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: auth/index.handler
+      # add here your policies or roles
+      # Policies:
+      #   - DynamoDBCrudPolicy:
+      #       TableName: !Ref TableUsers
+      Events:
+        Requests:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /v1/auth/{proxy+}
+            Method: ANY
+            Auth:
+              Authorizer: NONE
+
+  #################################################
+  # The vision function
+  #################################################
+  MyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app/routes/my/index.handler
+      # enter your policies here, maybe a role arn
+      # Policies:
+      #   - DynamoDBCrudPolicy:
+      #       TableName: !Ref TableVision
+      Events:
+        Cors:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /v1/my/{proxy+}
+            Method: OPTIONS
+            Auth:
+              Authorizer: NONE
+        Gets:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /v1/my/{proxy+}
+            Method: GET
+        Posts:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /v1/my/{proxy+}
+            Method: POST
+        Puts:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /v1/my/{proxy+}
+            Method: PUT            
+
+
+  #access logs
+  AccessLogs:
+    Type: AWS::Logs::LogGroup
+
+Outputs:
+  HttpApiUrl:
+    Description: URL of your API endpoint
+    Value:
+      Fn::Sub: 'https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/'

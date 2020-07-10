@@ -1,0 +1,11 @@
+{
+  "name": "@rasensio/validation",
+  "version": "1.0.0",
+  "description": "Validation tools",
+  "main": "validation.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rodrigo Asensio - @rasensio",
+  "license": "ISC"
+}
