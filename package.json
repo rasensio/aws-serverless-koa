@@ -4,7 +4,7 @@
   "description": "aws-serverless-koa",
   "main": "index.js",
   "scripts": {
-    "local": "node src/local.js",
+    "dev": "node src/local.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "sh scripts/dev-deploy.sh"
   },
@@ -13,13 +13,13 @@
   "dependencies": {
     "@koa/cors": "^3.1.0",
     "cognito-jwt-token-validator": "^1.0.0",
-    "koa": "^2.13.0",
+    "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-respond": "^2.1.0",
     "koa-router": "^9.4.0",
-    "serverless-http": "^2.6.0"
+    "serverless-http": "^2.7.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.771.0"
+    "aws-sdk": "^2.1077.0"
   }
 }

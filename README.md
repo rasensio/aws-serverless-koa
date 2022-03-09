@@ -6,12 +6,12 @@
 git clone git@github.com:rasensio/aws-serverless-koa.git myproject
 cd myproject
 rm -rf .git
+npm i
 ```
 
-## Run locally 
-
+## To debug locally
 ```
-npm run local
+npm run dev
 ```
 
 And open your browser at https://localhost:3000
